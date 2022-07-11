@@ -15,9 +15,26 @@ func doComplex() *pb.Complex {
 			{Id: 11, Name: "Andrew"},
 		},
 	}
+}
+
+func doEnum() *pb.Enumeration {
+	return &pb.Enumeration{
+		EyeColor: pb.EyeColor_EYE_COLOR_GREEN,
+	}
+}
+
+func doMap() *pb.MapExample {
+	return &pb.MapExample{
+		Ids: map[string]*pb.IDWrapper{
+			"myid":  {Id: 42},
+			"myid2": {Id: 43},
+			"myid3": {Id: 44},
+		},
+	}
 
 }
 
 func main() {
-	fmt.Printf("%+v", doComplex())
+	//fmt.Printf("%+v", doComplex())
+	fmt.Println(doMap())
 }

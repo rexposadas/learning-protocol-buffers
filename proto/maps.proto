@@ -1,0 +1,11 @@
+syntax = "proto3";
+package example.maps;
+option go_package="github.com/rexposadas/learning-protocol-buffers/proto";
+
+message IDWrapper {
+  uint32  id = 1;
+}
+
+message MapExample{
+  map<string, IDWrapper> ids = 1;
+}
