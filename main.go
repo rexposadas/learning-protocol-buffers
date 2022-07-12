@@ -73,8 +73,8 @@ func main() {
 	//fmt.Println(doMap())
 	//doFile(doSimple())
 
-	jsonString := doToJSON(doSimple())
-	message := doFromJSON(jsonString, reflect.TypeOf(pb.Simple{}))
+	jsonString := doToJSON(doComplex())
+	message := doFromJSON(jsonString, reflect.TypeOf(pb.Complex{}))
 
 	fmt.Println(jsonString)
 	fmt.Println(message)
