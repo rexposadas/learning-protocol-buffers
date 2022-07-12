@@ -3,7 +3,14 @@ package main
 import (
 	"fmt"
 	pb "github.com/rexposadas/learning-protocol-buffers/proto"
+	"google.golang.org/protobuf/proto"
 )
+
+func doSimple() *pb.Simple {
+	return &pb.Simple{
+		Id: 33,
+	}
+}
 
 func doComplex() *pb.Complex {
 	return &pb.Complex{
@@ -31,10 +38,22 @@ func doMap() *pb.MapExample {
 			"myid3": {Id: 44},
 		},
 	}
+}
+
+func doFile(p proto.Message) {
+	path := "simple.bin" // the file we will write to and read from
+
+	writeToFile(path, p)
+
+	message := &pb.Simple{}
+	readFromFile(path, message)
+
+	fmt.Println("file: ", message)
 
 }
 
 func main() {
-	//fmt.Printf("%+v", doComplex())
-	fmt.Println(doMap())
+	//fmt.Println(doMap())
+	doFile(doSimple())
+
 }

@@ -1,0 +1,8 @@
+syntax = "proto3";
+package example.simple;
+
+option go_package="github.com/rexposadas/learning-protocol-buffers/proto";
+
+message Simple {
+  int32 id = 1;
+}
