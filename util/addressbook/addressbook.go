@@ -1,43 +1,22 @@
 package addressbook
 
 import (
-	"fmt"
 	pb "github.com/rexposadas/learning-protocol-buffers/proto"
 	"google.golang.org/protobuf/proto"
 	"io/ioutil"
 	"log"
 )
 
+// Add a person to the address book.
+func Add(filename string, person *pb.Person) {
+	book := Read(filename)
+	book.People = append(book.People, person)
+
+	Write(filename, book)
+}
+
 // Write the address book to file.
-func Write(filename string, original, toAdd proto.Message) {
-
-	if toAdd == nil {
-		writeToFile(filename, original)
-	}
-
-	// Add the address book and write to file
-
-}
-
-func FirstPerson() *pb.AddressBook {
-	return &pb.AddressBook{
-		People: []*pb.Person{
-			{Id: 22, Name: "first person"},
-		},
-	}
-
-}
-
-// Read address book from file
-func Read(filename string) {
-	message := &pb.AddressBook{}
-	readFromFile(filename, message)
-
-	fmt.Println("file: ", message)
-}
-
-// writes the address book, a proto message, to file.
-func writeToFile(filename string, pb proto.Message) {
+func Write(filename string, pb proto.Message) {
 	out, err := proto.Marshal(pb)
 	if err != nil {
 		log.Fatalln(err)
@@ -46,21 +25,28 @@ func writeToFile(filename string, pb proto.Message) {
 	if err = ioutil.WriteFile(filename, out, 0644); err != nil {
 		log.Fatalln("cannot write to file", err)
 	}
-
-	fmt.Println("data has been written")
-
 }
 
-// Read from file and put in a proto message.
-func readFromFile(filename string, pb proto.Message) {
+func FirstPerson() *pb.AddressBook {
+	return &pb.AddressBook{
+		People: []*pb.Person{
+			{Id: 22, Name: "first person"},
+		},
+	}
+}
+
+// Read address book from file
+func Read(filename string) *pb.AddressBook {
+	pbBook := &pb.AddressBook{}
 	in, err := ioutil.ReadFile(filename)
 
 	if err != nil {
-		log.Fatalln("failed to read file", in)
-		return
+		log.Fatalln("failed to read file ", filename)
 	}
 
-	if err := proto.Unmarshal(in, pb); err != nil {
+	if err := proto.Unmarshal(in, pbBook); err != nil {
 		log.Fatalln("failed to unmarshal ", err)
 	}
+
+	return pbBook
 }

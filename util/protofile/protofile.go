@@ -29,8 +29,6 @@ func writeToFile(name string, pb proto.Message) {
 	if err = ioutil.WriteFile(name, out, 0644); err != nil {
 		log.Fatalln("cannot write to file", err)
 	}
-
-	fmt.Println("data has been written")
 }
 
 func readFromFile(name string, pb proto.Message) {
