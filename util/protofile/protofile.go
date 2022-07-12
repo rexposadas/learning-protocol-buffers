@@ -1,11 +1,24 @@
-package main
+package protofile
 
 import (
 	"fmt"
+	pb "github.com/rexposadas/learning-protocol-buffers/proto"
 	"google.golang.org/protobuf/proto"
 	"io/ioutil"
 	"log"
 )
+
+func DoFile(p proto.Message) {
+	path := "simple.bin" // the file we will write to and read from
+
+	writeToFile(path, p)
+
+	message := &pb.Simple{}
+	readFromFile(path, message)
+
+	fmt.Println("file: ", message)
+
+}
 
 func writeToFile(name string, pb proto.Message) {
 	out, err := proto.Marshal(pb)
