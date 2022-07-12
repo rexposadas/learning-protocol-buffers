@@ -1,15 +1,13 @@
 package main
 
 import (
-	"fmt"
-	"path/filepath"
-
 	"github.com/rexposadas/learning-protocol-buffers/util/addressbook"
+	"path/filepath"
 )
 
 func main() {
 	// Step 1: Create initial address book
-	addressBookName := fmt.Sprintf("generated%daddressbook.bin", filepath.Separator)
+	addressBookName := filepath.FromSlash("generated/addressbook.bin")
 	addressbook.Write(addressBookName, addressbook.FirstPerson(), nil)
 	addressbook.Read(addressBookName)
 
