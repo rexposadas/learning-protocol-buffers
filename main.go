@@ -4,6 +4,7 @@ import (
 	"fmt"
 	pb "github.com/rexposadas/learning-protocol-buffers/proto"
 	"google.golang.org/protobuf/proto"
+	"reflect"
 )
 
 func doSimple() *pb.Simple {
@@ -52,8 +53,30 @@ func doFile(p proto.Message) {
 
 }
 
+// input: json string
+// output: protomessage
+func doFromJSON(jsonString string, t reflect.Type) proto.Message {
+	message := reflect.New(t).Interface().(proto.Message)
+	fromJSON(jsonString, message)
+	return message
+}
+
+// take a message and converts it to a JSON string
+func doToJSON(p proto.Message) string {
+	jsonString := toJSON(p)
+
+	fmt.Println(jsonString)
+	return jsonString
+}
+
 func main() {
 	//fmt.Println(doMap())
-	doFile(doSimple())
+	//doFile(doSimple())
+
+	jsonString := doToJSON(doSimple())
+	message := doFromJSON(jsonString, reflect.TypeOf(pb.Simple{}))
+
+	fmt.Println(jsonString)
+	fmt.Println(message)
 
 }
